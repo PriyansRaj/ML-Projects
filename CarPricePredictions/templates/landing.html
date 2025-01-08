@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Car Price Predictor</title>
+ 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+    <style>
+     
+      body {
+        background: linear-gradient(to bottom right, rgba(255, 127, 80, 0.9), rgba(255, 140, 105, 0.7)), url('https://source.unsplash.com/1600x900/?car,road') no-repeat center center fixed;
+        background-size: cover;
+        font-family: 'Arial', sans-serif;
+        color: white;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        text-align: center;
+      }
+      
+      .landing-card {
+        background: rgba(0, 0, 0, 0.6);
+        padding: 30px;
+        border-radius: 20px;
+        max-width: 550px;
+        width: 100%;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+      
+      .landing-card h1 {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+      
+      .landing-card p {
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+      }
+      
+      .btn-get-started {
+        background-color: #ff7f50;
+        color: white;
+        padding: 12px 40px;
+        border-radius: 30px;
+        font-size: 1.2rem;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+      }
+
+      .btn-get-started:hover {
+        background-color: #e06d3f;
+        transform: scale(1.05);
+      }
+
+      .hidden {
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+      }
+
+      .fade-in {
+        animation: fadeIn 2s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="landing-card fade-in">
+      <h1>Want to Find the Price of Your Old Car?</h1>
+      <p>Click the button below to get an accurate estimate based on your car's details.</p>
+      <button class="btn-get-started" onclick="startPrediction()">Get Started</button>
+    </div>
+
+    <script>
+      function startPrediction() {
+        document.querySelector('.landing-card').classList.add('hidden');
+        setTimeout(function() {
+          window.location.href = '/home';
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>
