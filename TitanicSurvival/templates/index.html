@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titanic Survival Prediction</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom Titanic Theme CSS */
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #2c3e50; /* Dark blue background, reminiscent of Titanic's era */
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin-top: 50px;
+            padding-top: 20px;
+        }
+
+        .form-container {
+            background-color: #34495e; /* Darker shade for the form container */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+            margin-top: -50px; /* Pull the form up a bit to avoid too much space */
+        }
+
+        .form-container h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            color: #f39c12; /* Gold accent color */
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #ecf0f1; /* Light gray color for labels */
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            margin-top: 5px;
+            border-radius: 8px;
+            border: 1px solid #f39c12; /* Gold border */
+            background-color: #34495e; /* Dark background for inputs */
+            color: #fff;
+        }
+
+        .form-group input[type="number"] {
+            height: 45px;
+        }
+
+        button {
+            background-color: #f39c12; /* Titanic gold accent */
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #e67e22; /* Darker gold on hover */
+        }
+
+        .prediction {
+            margin-top: 30px;
+            font-size: 1.2rem;
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            background-color: #16a085; /* A teal shade to represent hope (survival) */
+            border-radius: 8px;
+        }
+
+        .alert {
+            margin-top: 20px;
+        }
+
+        /* Titanic Header Image */
+        .header-img {
+            width: 100%;
+            height: 350px;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/RMS_Titanic_3.jpg/800px-RMS_Titanic_3.jpg');
+            background-size: cover;
+            background-position: center;
+            border-bottom: 10px solid #f39c12; /* Gold accent under the header */
+            position: relative;
+        }
+        
+        .header-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #f39c12;
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Ensuring the header doesn't overlap */
+        .header-img {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form-container-wrapper {
+            position: relative;
+            z-index: 10;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Titanic Header Image -->
+    <div class="header-img">
+        <div class="header-text">Titanic Survival Prediction</div>
+    </div>
+
+    <div class="container">
+        <div class="form-container-wrapper">
+            <div class="form-container">
+                <h2>Predict Titanic Passenger Survival</h2>
+                <form action="/predict" method="POST">
+                    <div class="form-group">
+                        <label for="pclass">Passenger Class (1, 2, 3):</label>
+                        <input type="number" id="pclass" name="pclass" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="embarked">Embarked (C, Q, S):</label>
+                        <select id="embarked" name="embarked" class="form-control" required>
+                            <option value="C">Cherbourg</option>
+                            <option value="Q">Queenstown</option>
+                            <option value="S">Southampton</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sex">Sex (male, female):</label>
+                        <select id="sex" name="sex" class="form-control" required>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="family_members">Number of Family Members:</label>
+                        <input type="number" id="family_members" name="family_members" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fare">Fare:</label>
+                        <input type="number" id="fare" name="fare" class="form-control" required>
+                    </div>
+
+                    <button type="submit">Predict Survival</button>
+                </form>
+            </div>
+        </div>
+
+        {% if prediction_text %}
+            <div class="prediction">
+                {{ prediction_text }}
+            </div>
+        {% endif %}
+
+        {% if error_message %}
+            <div class="alert alert-danger">
+                {{ error_message }}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS (Optional for enhanced functionality) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

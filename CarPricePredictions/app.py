@@ -43,7 +43,7 @@ def predict():
         print(prediction)
 
        
-        return f"{np.round(prediction[0][0], 2)}"
+        return f"{abs(np.round(prediction[0][0], 2))}"
 
     except Exception as e:
         return f"Error: {str(e)}"
