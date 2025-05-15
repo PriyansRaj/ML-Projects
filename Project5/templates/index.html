@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Consumption Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 30px;
+        }
+
+        h1 {
+            font-size: 40px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #fff;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .form-container:hover {
+            transform: translateY(-10px);
+        }
+
+        label {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #f9f9f9;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"], select {
+            background-color: #fff;
+        }
+
+        input[type="number"]:focus, select:focus {
+            outline: none;
+            border-color: #ff7e5f;
+            box-shadow: 0 0 10px rgba(255, 126, 95, 0.6);
+        }
+
+        button {
+            background-color: #ff7e5f;
+            color: white;
+            font-size: 18px;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #feb47b;
+        }
+
+        .prediction {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 20px;
+            color: #2c3e50;
+        }
+
+        .prediction h2 {
+            font-size: 24px;
+            color: #27ae60;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 14px;
+            color: #7f8c8d;
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Energy Consumption Prediction</h1>
+    <div class="form-container">
+        <form action="/" method="POST">
+            <label for="model">Select Model:</label>
+            <select name="model" id="model">
+                {% for m in models %}
+                    <option value="{{ m }}" {% if m == selected_model %}selected{% endif %}>{{ m }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="Temperature">Temperature (°C):</label>
+            <input type="number" step="any" name="Temperature" required>
+
+            <label for="SquareFootage">Square Footage (sq. ft.):</label>
+            <input type="number" step="any" name="SquareFootage" required>
+
+            <label for="Occupancy">Occupancy (persons):</label>
+            <input type="number" step="any" name="Occupancy" required>
+
+            <label for="HVACUsage">HVAC Usage (0 or 1):</label>
+            <select name="HVACUsage" id="HVACUsage" required>
+                <option value="0">0 (Off)</option>
+                <option value="1">1 (On)</option>
+            </select>
+
+            <label for="LightingUsage">Lighting Usage (0 or 1):</label>
+            <select name="LightingUsage" id="LightingUsage" required>
+                <option value="0">0 (Off)</option>
+                <option value="1">1 (On)</option>
+            </select>
+
+            <label for="RenewableEnergy">Renewable Energy (kWh):</label>
+            <input type="number" step="any" name="RenewableEnergy" required>
+
+            <label for="Holiday">Holiday (0 or 1):</label>
+            <select name="Holiday" id="Holiday" required>
+                <option value="0">0 (No)</option>
+                <option value="1">1 (Yes)</option>
+            </select>
+
+            <button type="submit">Predict</button>
+        </form>
+    </div>
+
+    {% if prediction is not none %}
+        <div class="prediction">
+            <h2>Predicted Energy Consumption: {{ prediction }} kWh</h2>
+        </div>
+    {% endif %}
+
+  
+</body>
+</html>
